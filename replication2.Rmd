@@ -8,12 +8,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Install Required Packages
 rm(list = ls())
+
 library(ri)
 library(RItools)
 library(car)
 library(xtable)
 library(effects)
 library(RColorBrewer)
+library(gt)
+library(knitr)
+library(dplyr)
+library(data.table)
+
 
 # Set for non-scientific notaion output
 options(scipen = 999)
@@ -31,8 +37,12 @@ white.dat = read.csv('./csvData/white_face_data.csv')
 
 ```
 
+```{r table1}
 
-```{r table2, echo = FALSE}
+
+```
+
+```{r table2, echo = FALSE, results = 'asis'}
 
 # Table 2
 
@@ -47,7 +57,45 @@ white.dat = read.csv('./csvData/white_face_data.csv')
 
 out.balance.test = xBalance(fmla = treatment ~ liberal+republican+obama.disapprove+ride.everyday+voted.2010+romney.voter+Hispanics.x+age+residency.new+hispanic.new+college+income.new+male+white, data = dat.all, report = c("std.diffs","z.scores","adj.means","chisquare.test"), strata = factor(dat.all$station))
 
-print(out.balance.test)
-xtable.out.balance.text = xtable(out.balance.test)
+# Convert the output into a dataframe and select the appropriate columns
+
+table2Data <- as.data.frame(out.balance.test) %>% 
+  select(results.treatment.0.strat, 
+         results.treatment.1.strat,
+         results.std.diff.strat,
+         results.z.strat)
+
+# Use the data table package to turn the row titles into a colunn
+
+setDT(table2Data, keep.rownames = TRUE)[]
+
+# Use colnames function to rename the columns
+
+colnames(table2Data) <- c("Condition", "Control", "Treatment", "Standard difference", "Z score")
+
+# Rename the Condition column to appropriate values
+
+table2Data$Condition = c("Liberal", 
+                         "Republican", 
+                         "Obama Disapprove", 
+                         "Ride MBTA every day",
+                         "Voted 2010",
+                         "Romney voter",
+                         "Hispanic threat",
+                         "Age",
+                         "Residency Year",
+                         "Hispanic",
+                         "College",
+                         "Income",
+                         "Male",
+                         "White")
+
+# Use gt to create the table
+
+table2 <- gt(data = table2Data)
+
+# Round the table values to 2 values
+
+fmt_number(data = table2, columns = c("Control", "Treatment", "Standard difference", "Z score"), decimals = 2)
 
 ```
