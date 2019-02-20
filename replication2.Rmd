@@ -92,10 +92,31 @@ table2Data$Condition = c("Liberal",
 
 # Use gt to create the table
 
-table2 <- gt(data = table2Data)
+gt(data = table2Data) %>% 
 
 # Round the table values to 2 values
 
-fmt_number(data = table2, columns = c("Control", "Treatment", "Standard difference", "Z score"), decimals = 2)
+  fmt_number(columns = c("Control", 
+                         "Treatment", 
+                         "Standard difference", 
+                         "Z score"), 
+             decimals = 2) %>% 
+  
+# Add in the title of the table
+  
+  tab_header(
+    title = "Table 2. Covariate Balance across treatment conditions"
+  ) %>% 
+  
+# Add footnotes at the bottom of the table
+  
+  tab_footnote(
+    footnote = "Mean response values for pretreatment variables accounting for stratification into train stations. All variables are 0 and 1 variables, except for Hispanic threat, which is a seven-point scale indicating how threatening respondents find Hispanics, recoded 0-1; residency, which is measured in years; and income, which is annual income in dollars.",
+    locations = cells_data(columns = 1, rows = 1)) %>%   
+  
+  tab_footnote(
+    footnote = "Difference in standardized units",
+    locations = cells_column_labels(
+      columns = c("Standard difference")))
 
 ```
