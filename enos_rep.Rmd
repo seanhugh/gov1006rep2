@@ -128,6 +128,7 @@ final.mat <- as.data.frame(final.mat)
 colnames(final.mat) <- c("variable", "subset", "N", "ate", "greater.p.value", "lesser.p.value", "x.sd", "x.mean")
 # print(final.mat)
 final.mat.main <- final.mat
+
 ```
 
 
@@ -520,6 +521,10 @@ table2Data$Condition <- c("Liberal",
                          "Income",
                          "Male",
                          "White")
+dat.all %>% 
+  select(income.new) %>% 
+  summary()
+
 
 ```
 
@@ -559,7 +564,6 @@ gt(data = table2Data) %>%
 #   to be true
 
 ```
-
 
 ```{r echo = FALSE, warning = FALSE, message = FALSE, results = 'asis'}
 ### Graphics

@@ -1,0 +1,57 @@
+---
+title: "Enos Extension"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Install Required Packages
+rm(list = ls())
+
+library(ri)
+library(RItools)
+library(car)
+library(xtable)
+library(effects)
+library(RColorBrewer)
+library(gt)
+library(knitr)
+library(dplyr)
+library(data.table)
+
+# Load data
+
+dat.all = read.csv('./csvData/pnas_data.csv')
+dat.t1 = read.csv('./csvData/t1_data.csv')
+dat.all.prime = read.csv('./csvData/prime_data.csv')
+
+# Data loading for faces graphic
+conf.dat = read.csv('./csvData/confederate_face_data.csv')
+hisp.dat = read.csv('./csvData/hispanic_face_data.csv')
+white.dat = read.csv('./csvData/white_face_data.csv')
+
+```
+
+
+```{r DataCreation}
+
+# Create a new variable that equals the sum of each of the repsonse columns
+# The three columns are: "numberim", "Remain", "Englishlan"
+
+summarized_data %>% 
+  
+  dat.all %>% mutate(sumx = sum(numberim.x, Remain.x, Englishlan.x),
+                   sumy = sum(numberim.x, Remain.x, Englishlan.x)) %>% 
+  
+  # Create a new variable total_sum that equals the difference from the second
+  # round of interviews (.y) to the first round of interviews (.x)
+  
+  mutate(view_change = sumy - sumx) %>% 
+  
+  # select the variables that we will use in our regression
+  
+  select()
+
+
+```
