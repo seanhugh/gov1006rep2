@@ -19,6 +19,9 @@ library(gt)
 library(knitr)
 library(dplyr)
 library(data.table)
+library(rstanarm)
+library(broom)
+library(ggplot2)
 
 # Load data
 
@@ -34,24 +37,68 @@ white.dat = read.csv('./csvData/white_face_data.csv')
 ```
 
 
-```{r DataCreation}
+```{r DataCreation, echo = FALSE, include = FALSE}
 
-# Create a new variable that equals the sum of each of the repsonse columns
-# The three columns are: "numberim", "Remain", "Englishlan"
+# Create a new tibble summarized_data
 
-summarized_data %>% 
+summarized_data <- dat.all %>% 
   
-  dat.all %>% mutate(sumx = sum(numberim.x, Remain.x, Englishlan.x),
-                   sumy = sum(numberim.x, Remain.x, Englishlan.x)) %>% 
+  # filter out all NA instances
+  
+  filter(!is.na(numberim.x) &
+         !is.na(numberim.y) &
+         !is.na(Remain.x) &
+         !is.na(Remain.y) &
+         !is.na(Englishlan.x) &
+         !is.na(Englishlan.y)) %>% 
+  
+  # Create a new variable that equals the sum of each of the repsonse columns
+  # The three columns are: "numberim", "Remain", "Englishlan"
+  
+  mutate(sumx = numberim.x + Remain.x + Englishlan.x,
+                   sumy = numberim.y + Remain.y + Englishlan.y) %>% 
   
   # Create a new variable total_sum that equals the difference from the second
   # round of interviews (.y) to the first round of interviews (.x)
   
-  mutate(view_change = sumy - sumx) %>% 
+  mutate(view_change = sumy - sumx) 
   
   # select the variables that we will use in our regression
+
+# Build a Bayesian Linear Regression of the data
+
+data_model <- stan_glm(view_change ~ treatment, data = summarized_data)
+
+# Print a summary of the model
+
+summary(data_model)
+
+```
+
+```{r DataModeling}
+
+# We will now build a bayesian linear regression and add in some extra variables
+
+data_model2 <- stan_glm(view_change ~ treatment + age + male + republican + income + romney.voter, data = summarized_data)
   
-  select()
+# Save the model parameters
+
+tidy_coef <- tidy(data_model2)
+
+# Extract intercept and slope
+
+model_intercept <- tidy_coef$estimate[1]
+
+# Remove the first row of the dataset now that we have extracted the slope
+
+tidy_coef2 <- tidy_coef[-1,]
+
+# Create the plot
+
+ggplot(tidy_coef2, aes(x = term, y = estimate)) +
+  geom_bar(stat="identity") +
+  ggtitle("Estimates of Conditions from Bayesian Linear Regression (Intercept = 1)") +
+  labs(subtitle = "This graph shows the output of the strat_glm function on the projects dataset. It can be seen that the treatment condition has the largest impact of any of the given variables.")
 
 
 ```
