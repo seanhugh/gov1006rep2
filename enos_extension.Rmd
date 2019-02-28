@@ -87,6 +87,15 @@ tidy_coef2 <- tidy_coef[-1,]
 
 ```
 
+## Abstract
+
+I use the Harvard Dataverse data to explore the data and findings from the paper ["Causal Effect of Intergroup Contact on Exclusionary Attitudes"](https://scholar.harvard.edu/files/renos/files/enostrains.pdf)[1].
+
+## Details
+
+I want to run a more complex bayesian linear model on the data to explore how significant
+some of the factors were in predicting the conservative or liberal shift in the sibjects views over the course of the experiment. Conservative or Liberal responses to the questions were judged on a scale from 1 - 5 (with 5 being the most conservative). I created a new variable that accounted for this change across the 3 different "questions" that were tracked over the course of the experiment: numberim, remain, and englishlan. This new number is positive when the subject shifted to become more conservative over the weeklong period, and is negative when the subject shifted to become more liberal over the period. The following is a bar graph demonstrating the estimates for the slope of different variables that were entered into the model (Model was created using stan_glm). Note how treatment has the largest magnitude.
+
 ```{r DataModeling, echo = FALSE}
 
 # Create the plot
@@ -94,7 +103,8 @@ tidy_coef2 <- tidy_coef[-1,]
 ggplot(tidy_coef2, aes(x = term, y = estimate)) +
   geom_bar(stat="identity") +
   ggtitle("Estimates of Conditions from Bayesian Linear Regression (Intercept = 1)") +
-  labs(subtitle = "This graph shows the output of the strat_glm function on the projects \n dataset. It can be seen that the treatment condition has the largest impact \n of any of the given variables.")
+  labs(subtitle = "This graph shows the output of the strat_glm function on the projects \n dataset. It can be seen that the treatment condition has the largest impact \n of any of the given variables.") +
+  labs(x = "Variable", y = "Estimate")
 
 
 ```
