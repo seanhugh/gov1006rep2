@@ -1,5 +1,5 @@
 ---
-title: "Enos Extension"
+title: "Exploration of Enos Data"
 output: html_document
 ---
 
@@ -108,3 +108,7 @@ ggplot(tidy_coef2, aes(x = term, y = estimate)) +
 
 
 ```
+
+## Citations
+
+[1] Enos, Ryan D. 2014. “Causal Effect of Intergroup Contact on Exclusionary Attitudes,” Proceedings of the National Academy of Sciences of the United States of America 111 (10):3699–3704.
