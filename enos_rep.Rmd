@@ -1,5 +1,6 @@
 ---
-title: "Replication 2"
+title: "Replication of Enos Paper"
+author: "Sean Hughes"
 output: html_document
 ---
 
@@ -36,6 +37,10 @@ hisp.dat = read.csv('./csvData/hispanic_face_data.csv')
 white.dat = read.csv('./csvData/white_face_data.csv')
 
 ```
+
+## Abstract
+
+I use the Harvard Dataverse data to replicate figures from the paper ["Causal Effect of Intergroup Contact on Exclusionary Attitudes"](https://scholar.harvard.edu/files/renos/files/enostrains.pdf).
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE, include = FALSE}
 
@@ -391,6 +396,10 @@ colnames(final.mat) <- c("variable", "subset", "N", "ate", "greater.p.value", "l
 final.mat.prime = final.mat
 ```
 
+## Table 1
+
+I succesfully replicated all elements of table 1.
+
 ```{r echo = FALSE, warning=FALSE, message=FALSE}
 
 # Table 1
@@ -473,6 +482,10 @@ gt(data = table1Data) %>%
 
 
 ```
+
+## Table 2
+
+I was able to succesfully recreate all values of table 2 except for the *n* values and the values of income. Regarding income, it is possible that the author possibly ammended some of the data after publishing it to dataverse. Regarding *n*, I iterated through possible ways to achieve the n values that the author achieved. By removing NA values, the Control *n* value can be achieved, but I am unsure how the treatment *n* value was achieved.
 
 ```{r table2, echo = FALSE, message = FALSE, warning=FALSE, include = FALSE}
 
@@ -565,7 +578,14 @@ gt(data = table2Data) %>%
 
 ```
 
+## Graphics
+
+I was able to succesfully recreate the graphics.
+
 ```{r echo = FALSE, warning = FALSE, message = FALSE, results = 'asis'}
+
+# I borrowed code for the graphic from Gabe who was my partner for the project.
+
 ### Graphics
 # Graph presets
 os = .4
@@ -635,6 +655,6 @@ for(i in 1:length(var.names)){
 
 ```{r table3, echo = FALSE}
 
-# Could not find data for table 3. Will discuss in class.
+# Could not find data for table 3.
 
 ```
