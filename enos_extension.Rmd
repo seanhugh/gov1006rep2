@@ -69,14 +69,6 @@ summarized_data <- dat.all %>%
 
 data_model <- stan_glm(view_change ~ treatment, data = summarized_data)
 
-# Print a summary of the model
-
-summary(data_model)
-
-```
-
-```{r DataModeling}
-
 # We will now build a bayesian linear regression and add in some extra variables
 
 data_model2 <- stan_glm(view_change ~ treatment + age + male + republican + income + romney.voter, data = summarized_data)
@@ -93,12 +85,16 @@ model_intercept <- tidy_coef$estimate[1]
 
 tidy_coef2 <- tidy_coef[-1,]
 
+```
+
+```{r DataModeling, echo = FALSE}
+
 # Create the plot
 
 ggplot(tidy_coef2, aes(x = term, y = estimate)) +
   geom_bar(stat="identity") +
   ggtitle("Estimates of Conditions from Bayesian Linear Regression (Intercept = 1)") +
-  labs(subtitle = "This graph shows the output of the strat_glm function on the projects dataset. It can be seen that the treatment condition has the largest impact of any of the given variables.")
+  labs(subtitle = "This graph shows the output of the strat_glm function on the projects \n dataset. It can be seen that the treatment condition has the largest impact \n of any of the given variables.")
 
 
 ```
