@@ -42,6 +42,8 @@ white.dat = read.csv('./csvData/white_face_data.csv')
 
 I use the Harvard Dataverse data to replicate figures from the paper ["Causal Effect of Intergroup Contact on Exclusionary Attitudes"](https://scholar.harvard.edu/files/renos/files/enostrains.pdf)[1].
 
+Always great to have an abstract!
+
 ```{r echo = FALSE, warning=FALSE, message=FALSE, include = FALSE}
 
 ### Main results
@@ -479,7 +481,7 @@ gt(data = table1Data) %>%
   
   tab_source_note(source_note = 'In the first All respondents" column, ATE represents responses in T2-T1 for the treatment group compared with the control group for the entire experimental sample. Positive values mean a more politically conservative response. In the "Waits on platform" column, CATEs are the Conditional Average Treatment Effects for persons who said they stand on the platform, rather than wait in their cars. In the second "All Respondents" column, T1 levels and SDs for each variable for all respondents. All variables scaled 0')
   
-
+# Beautiful table and thorough notes. This is great work.
 
 ```
 
@@ -576,6 +578,8 @@ gt(data = table2Data) %>%
 #   which treatment the user gets, however the number of rows does not add up were this
 #   to be true
 
+# Again, excellent work on the table
+
 ```
 
 ## Graphics
@@ -650,6 +654,8 @@ for(i in 1:length(var.names)){
 		col = colors[2])
 			}
 # dev.off()
+
+# good
 ```
 
 
@@ -657,9 +663,17 @@ for(i in 1:length(var.names)){
 
 # Could not find data for table 3.
 
+# Notes like these are good to have
+
 ```
 
 ## Citations
 
 [1] Enos, Ryan D. 2014. “Causal Effect of Intergroup Contact on Exclusionary Attitudes,” Proceedings of the National Academy of Sciences of the United States of America 111 (10):3699–3704.
+
+Thanks for having a references section!
+
+Great notes for replicated tables and figure. Overall, excellent comments throughout original Enos code. Might be useful to include comments/notes from class explaining the more complicated parts of the code. Great work!
+
+
 
