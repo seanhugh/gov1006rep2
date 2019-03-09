@@ -63,6 +63,8 @@ summarized_data <- dat.all %>%
   
   mutate(view_change = sumy - sumx) 
   
+  # nice way to create a new variable
+  
   # select the variables that we will use in our regression
 
 # Build a Bayesian Linear Regression of the data
@@ -108,6 +110,8 @@ ggplot(tidy_coef2, aes(x = term, y = estimate)) +
 
 
 ```
+
+Cool extension, nice use of stan_glm, and a good looking plot. Explaining the details of this extension in a paragraph is great practice and really helps the reader understand what is going on. Really good stuff!
 
 ## Citations
 
